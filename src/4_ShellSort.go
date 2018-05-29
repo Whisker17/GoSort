@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /*
 希尔排序，也称递减增量排序算法，是插入排序的一种更高效的改进版本。但希尔排序是非稳定排序算法。
 希尔排序是基于插入排序的以下两点性质而提出改进方法的：
@@ -17,4 +19,27 @@ package main
 func ShellSort(datas []int) []int {
 	len := len(datas)
 
+	gap := 1
+	for gap < gap/3 {
+		gap = gap*3 + 1
+	}
+	for gap > 0 {
+		for i := gap; i < len; i++ {
+			temp := datas[i]
+			j := i - gap
+			for j >= 0 && datas[j] > temp {
+				datas[j+gap] = datas[j]
+				j -= gap
+			}
+			datas[j+gap] = temp
+		}
+		gap /= 3
+	}
+	return datas
+}
+
+func main() {
+	datas := []int{2, 1, 5, 3, 4}
+	datas = ShellSort(datas)
+	fmt.Println(datas)
 }
